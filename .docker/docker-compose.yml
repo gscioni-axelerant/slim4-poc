@@ -1,0 +1,39 @@
+version: '3.7'
+
+volumes:
+  database: {}
+
+networks:
+  base-net:
+    driver: bridge
+
+services:
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - php
+    volumes:
+      - ./logs/nginx/:/var/log/nginx
+      - ../:/var/www/app
+      - ./nginx/slim.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - base-net
+
+  php:
+    build: php
+    volumes:
+      - ../:/var/www/app
+      - ./data/shell_history:/home/utente/shell_history
+    networks:
+      - base-net
+    environment:
+      - HISTFILE=/home/utente/shell_history/.zsh_history
+
+  nodejs:
+    build: nodejs
+    working_dir: /var/www/app
+    volumes:
+      - ../:/var/www/app
+    networks:
+      - base-net
+

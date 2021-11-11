@@ -1,0 +1,13 @@
+.idea/
+.vscode/
+/coverage/
+/vendor/
+/var/logs/*
+!/var/logs/README.md
+.phpunit.result.cache
+/.docker/data/.zsh_history
+.php-cs-fixer.cache
+
+.docker/data/shell_history/.zsh_history
+
+src/Infrastructure/Application/logs/app.log

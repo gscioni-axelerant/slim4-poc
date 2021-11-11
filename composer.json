@@ -1,0 +1,58 @@
+{
+    "name": "gscioni-innoteam/slim4-poc",
+    "description": "A Slim 4 Framework PoC application with DDD",
+    "keywords": [
+        "microframework",
+        "rest",
+        "router",
+        "psr7"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Giovanni Paolo Scioni",
+            "email": "giovanni.scioni@innoteam.it",
+            "homepage": "https://innoteam.it/"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "doctrine/orm": "^2.10",
+        "lambdish/phunctional": "^2.1",
+        "monolog/monolog": "^2.2",
+        "php-di/php-di": "^6.3",
+        "ramsey/uuid": "^4.2",
+        "slim/psr7": "^1.3",
+        "slim/slim": "^4.7"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.2",
+        "mockery/mockery": "^1.4",
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpstan/extension-installer": "^1.1.0",
+        "phpstan/phpstan": "^0.12.80",
+        "phpunit/phpunit": "^8.0 || ^9.0",
+        "symfony/var-dumper": "^5.3"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": {
+            "*": "dist"
+        },
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    }
+}
