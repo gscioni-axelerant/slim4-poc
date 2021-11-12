@@ -4,3 +4,6 @@ services:
   nginx:
     ports:
       - "8080:80"
+  servicedb:
+    ports:
+      - "3306:3306"

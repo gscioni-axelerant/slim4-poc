@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Carrello\ValueObject;
+namespace App\Domain\Prodotto\Model;
 
-use App\Domain\Common\Traits\TimestampableModel;
+use App\Domain\Carrello\Model\Carrello;
+use App\Domain\Common\Model\DomainEntity;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
-class Prodotto implements \JsonSerializable
+class Prodotto extends DomainEntity
 {
-    use TimestampableModel;
-
-    public function __construct(
+    private function __construct(
         private null|UuidInterface $id,
+        private Carrello $carrello,
         private string $nome,
         private float $prezzo,
         private string $sku,
@@ -22,9 +22,24 @@ class Prodotto implements \JsonSerializable
         $this->updatedTimestamps();
     }
 
+    public static function crea(
+        null|UuidInterface $id,
+        null|Carrello $carrello,
+        string $nome,
+        float $prezzo,
+        string $sku,
+    ): self {
+        return new self($id, $carrello ?? Carrello::crea(id: null), $nome, $prezzo, $sku);
+    }
+
     public function getId(): UuidInterface
     {
         return $this->id;
+    }
+
+    public function getCarrello(): Carrello
+    {
+        return $this->carrello;
     }
 
     public function getNome(): string

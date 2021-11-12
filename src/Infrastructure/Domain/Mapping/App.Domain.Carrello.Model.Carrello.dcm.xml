@@ -1,0 +1,24 @@
+<doctrine-mapping
+    xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd"
+>
+    <entity name="App\Domain\Carrello\Model\Carrello" table="carrello">
+        <id name="id" column="id" type="uuid" />
+        <one-to-many
+                field="prodotti"
+                target-entity="App\Domain\Carrello\ValueObject\Prodotto"
+                mapped-by="carrello">
+            <cascade>
+                <cascade-all />
+            </cascade>
+        </one-to-many>
+        <field name="created_at" column="created_at" type="datetime_immutable" nullable="false"/>
+        <field name="updated_at" column="updated_at" type="datetime_immutable" nullable="true"/>
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="updatedTimestamps"/>
+            <lifecycle-callback type="prePersist" method="assertHasAtLeastOneProdotto"/>
+        </lifecycle-callbacks>
+    </entity>
+</doctrine-mapping>

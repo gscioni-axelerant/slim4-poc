@@ -7,7 +7,7 @@ namespace Tests\Infrastructure\Application\Actions\Carrello;
 use App\Domain\Carrello\Exception\CarrelloNotFoundException;
 use App\Domain\Carrello\Model\Carrello;
 use App\Domain\Carrello\Model\CarrelloRepository;
-use App\Domain\Carrello\ValueObject\Prodotto;
+use App\Domain\Prodotto\Model\Prodotto;
 use App\Infrastructure\Application\Actions\ActionError;
 use App\Infrastructure\Application\Actions\ActionPayload;
 use App\Infrastructure\Application\Handlers\HttpErrorHandler;
@@ -29,21 +29,11 @@ class ViewCarrelloActionTest extends TestCase
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $carrello = new Carrello(
-            Uuid::uuid4(),
-            new Prodotto(
-                id: null,
-                nome: 'pippo',
-                prezzo: 12.0,
-                sku: 'SKU-2212'
-            ),
-            new Prodotto(
-                id: null,
-                nome: 'pluto',
-                prezzo: 13.0,
-                sku: 'SKU-2213'
-            )
-        );
+        $carrello = Carrello::crea(Uuid::uuid4());
+        $prodotto1 = Prodotto::crea(id: null, carrello: $carrello, nome: 'pippo', prezzo: 12.0, sku: 'SKU-2212');
+        $prodotto2 = Prodotto::crea(id: null, carrello: $carrello, nome: 'pluto', prezzo: 13.0, sku: 'SKU-2232');
+        $carrello->getProdotti()->add($prodotto1);
+        $carrello->getProdotti()->add($prodotto2);
 
         $mockedCarrello = Mockery::mock(CarrelloRepository::class);
         $mockedCarrello->shouldReceive('findCarrelloById')

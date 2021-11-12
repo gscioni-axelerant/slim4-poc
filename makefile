@@ -39,7 +39,7 @@ prepare: hooks ## esegue la preparazione dell'ambiente
 
 .PHONY: hooks
 hooks: ## aggiunge gli hooks di Git
-		rm -rf .git/hooks && ln -s ../../.docker/scripts/git-hooks .git/hooks
+		test -s .git/hooks && rm -rf .git/hooks && ln -s ../../.docker/scripts/git-hooks .git/hooks
 
 .PHONY: build
 build: prepare ## esegue un build del sistema
@@ -55,7 +55,7 @@ composer-install: xoff ## installa le dipendenze del progetto
 
 .PHONY: phpunit
 phpunit: ## esegue phpunit
-		$(compose) -p $(PROJECT_NAME) exec -T $(php_container) sh -lc "sudo xoff;php vendor/bin/simple-phpunit $(conf)"
+		$(compose) -p $(PROJECT_NAME) exec -T $(php_container) sh -lc "sudo xoff;php vendor/bin/phpunit"
 
 .PHONY: test
 test: phpunit ## esegue i test unitari e di integrazione

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests;
 
 use DI\ContainerBuilder;
-use Exception;
 use PHPUnit\Framework\TestCase as PHPUnit_TestCase;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\App;
@@ -17,57 +16,33 @@ use Slim\Psr7\Uri;
 
 class TestCase extends PHPUnit_TestCase
 {
-    /**
-     * @throws Exception
-     *
-     * @return App
-     */
     protected function getAppInstance(): App
     {
-        // Instantiate PHP-DI ContainerBuilder
         $containerBuilder = new ContainerBuilder();
 
-        // Container intentionally not compiled for tests.
-
-        // Set up settings
         $settings = require __DIR__.'/../src/Infrastructure/Application/Core/settings.php';
         $settings($containerBuilder);
 
-        // Set up dependencies
         $dependencies = require __DIR__.'/../src/Infrastructure/Application/Core/dependencies.php';
         $dependencies($containerBuilder);
 
-        // Set up repositories
         $repositories = require __DIR__.'/../src/Infrastructure/Application/Core/repositories.php';
         $repositories($containerBuilder);
 
-        // Build PHP-DI Container instance
         $container = $containerBuilder->build();
 
-        // Instantiate the app
         AppFactory::setContainer($container);
         $app = AppFactory::create();
 
-        // Register middleware
         $middleware = require __DIR__.'/../src/Infrastructure/Application/Core/middleware.php';
         $middleware($app);
 
-        // Register routes
         $routes = require __DIR__.'/../src/Infrastructure/Application/Core/routes.php';
         $routes($app);
 
         return $app;
     }
 
-    /**
-     * @param string $method
-     * @param string $path
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $serverParams
-     *
-     * @return Request
-     */
     protected function createRequest(
         string $method,
         string $path,

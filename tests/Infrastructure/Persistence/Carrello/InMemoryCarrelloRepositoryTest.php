@@ -17,7 +17,7 @@ class InMemoryCarrelloRepositoryTest extends TestCase
      */
     public function test_find_all(): void
     {
-        $carrello = new Carrello(Uuid::uuid4(), new Prodotto(Uuid::uuid4(), 'test', 12.0, 'SKU-7894'));
+        $carrello = Carrello::crea(Uuid::uuid4());
 
         $carrelloRepository = new InMemoryCarrelloRepository([$carrello]);
 

@@ -29,6 +29,15 @@ services:
     environment:
       - HISTFILE=/home/utente/shell_history/.zsh_history
 
+  servicedb:
+    image: mysql:8.0
+    platform: linux/x86_64
+    networks:
+      - base-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=slim_db
+
   nodejs:
     build: nodejs
     working_dir: /var/www/app

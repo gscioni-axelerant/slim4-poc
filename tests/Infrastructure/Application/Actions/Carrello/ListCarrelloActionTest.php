@@ -6,7 +6,7 @@ namespace Tests\Infrastructure\Application\Actions\Carrello;
 
 use App\Domain\Carrello\Model\Carrello;
 use App\Domain\Carrello\Model\CarrelloRepository;
-use App\Domain\Carrello\ValueObject\Prodotto;
+use App\Domain\Prodotto\Model\Prodotto;
 use App\Infrastructure\Application\Actions\ActionPayload;
 use DI\Container;
 use Mockery;
@@ -17,16 +17,17 @@ class ListCarrelloActionTest extends TestCase
 {
     /**
      * @test
-     * #group Carrello
      */
-    public function dovrebbe_verificare_listing_carrello()
+    public function it_should_verify_listing_carrello()
     {
         $app = $this->getAppInstance();
 
         /** @var Container $container */
         $container = $app->getContainer();
 
-        $carrello = new Carrello(Uuid::uuid4(), new Prodotto(id: null, nome: 'pippo', prezzo: 12.0, sku: 'SKU-2212'));
+        $carrello = Carrello::crea(Uuid::uuid4());
+        $prodotto = Prodotto::crea(id: null, carrello: $carrello, nome: 'pippo', prezzo: 12.0, sku: 'SKU-2212');
+        $carrello->getProdotti()->add($prodotto);
 
         $mockedCarrello = Mockery::mock(CarrelloRepository::class);
         $mockedCarrello->shouldReceive('findAll')->andReturn([$carrello]);
