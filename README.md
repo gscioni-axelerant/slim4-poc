@@ -25,18 +25,22 @@ make enter
 composer install
 ```
 
-Mentre per avere una lista dei comandi disponibili:
-```
-make help
-```
-
 Il container php è configurato per far comunicare Xdebug con l'IDE in uso.
 
 ## Sviluppo
 
-#### Abilitare Xdebug
+#### Entrare dentro il container php
+```
+make enter;
+```
+#### Abilitare Xdebug (da dentro il container php)
 ```
 sudo xon;
+```
+
+#### Eseguire i test (da dentro il container php)
+```
+vendor/bin/phpunit
 ```
 
 ## Hooks pre-commit
@@ -63,6 +67,11 @@ make phpstan
 #### Abilitare/disabilitare Xdebug
 ```
 make xon/xoff
+```
+
+#### Avere una lista dei comandi disponibili
+```
+make help
 ```
 
 ### Librerie / Tools
